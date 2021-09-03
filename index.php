@@ -67,6 +67,7 @@
                         <a class="collapse-item" href="pages/cliente.php">Cliente</a>
                         <a class="collapse-item" href="pages/servicio.php">Servicio</a>
                         <a class="collapse-item" href="pages/vehiculo.php">Vehiculo</a>
+                        <a class="collapse-item" href="pages/reparacion.php">Reparaciones</a>
                     </div>
                 </div>
             </li>
@@ -203,21 +204,21 @@
                     <div class="row py-2">
                         <!-- CARD SERVICIOS -->
                         <div class="col-xl-6 col-md-6 mb-4">
-                                <a href="pages/servicio.php" class="text-decoration-none">
-                                    <div class="card border-left-info shadow h-100 py-2">
-                                        <div class="card-body">
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col mr-2">
-                                                    <h5 class="mb-2 font-weight-bold text-info text-uppercase mb-1">Servicios</h5>
-                                                    <div class=" mb-0 font-weight-bold text-gray-900 text-xs ">Ingresar, Actualizar y Eliminar servicios</div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <i class="fas fa-tools fa-2x text-gray-300"></i>
-                                                </div>
+                            <a href="pages/servicio.php" class="text-decoration-none">
+                                <div class="card border-left-info shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <h5 class="mb-2 font-weight-bold text-info text-uppercase mb-1">Servicios</h5>
+                                                <div class=" mb-0 font-weight-bold text-gray-900 text-xs ">Ingresar, Actualizar y Eliminar servicios</div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-tools fa-2x text-gray-300"></i>
                                             </div>
                                         </div>
                                     </div>
-                                </a>
+                                </div>
+                            </a>
                         </div>
 
                         <!-- CARD VEHICULOS -->

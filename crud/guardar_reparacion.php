@@ -1,41 +1,28 @@
 <?php
-
 include('../connection.php');
 
-if (isset($_GET['id'])) {
-	$id = $_GET['id'];
-	$query = "SELECT * FROM conductores WHERE id = $id";
-	$result = mysqli_query($conn, $query);
-	if (mysqli_num_rows($result) == 1) {
-		$row = mysqli_fetch_array($result);
-		$nombre = $row['nombre'];
-		$apellido =	$row['apellido'];
-		$direccion =	$row['direccion'];
-		$telefono =	$row['telefono'];
-		$correo =	$row['correo'];
-		$licencia =	$row['licencia'];
-		$salario =	$row['salario'];
+if (isset($_POST['guardar'])) {
+	$fecha_r = $_POST['fecha_re'];
+	$costo_r = $_POST['costo_re'];
+	$reparacion_v = $_POST['reparacion_v'];
+	$descripcion_r = $_POST['descripcion_r'];
+
+	$query = "INSERT INTO reparaciones(fecha, costo, vehiculos_id, observacion) VALUES ('$fecha_r', '$costo_r', '$reparacion_v' , '$descripcion_r')";
+
+	$result =  mysqli_query($conn, $query);
+	if (!$result) {
+		die("Query failed");
 	}
-}
 
-if (isset($_POST['actualizar'])) {
-	$id = $_GET['id'];
-	$nombre = $_POST['nombre_c'];
-	$ape_c = $_POST['apellido_c'];
-	$dir_c = $_POST['direccion_c'];
-	$tel_c = $_POST['telefono_c'];
-	$email_c = $_POST['email_c'];
-	$lic_c = $_POST['licencia_c'];
-	$sal_c = $_POST['salario_c'];
+	$_SESSION['message'] = 'Reparación guardada';
+	$_SESSION['message_type'] = 'success';
 
-	$query = "UPDATE conductores SET nombre = '$nombre' , apellido= '$ape_c', direccion= '$dir_c', telefono= '$tel_c', correo= '$email_c', licencia ='$lic_c', salario= '$sal_c' WHERE id = $id";
-	mysqli_query($conn, $query);
-	$_SESSION['message'] = 'Conductor Actualizado';
-	$_SESSION['message_type'] = 'warning';
-	header("Location: ../pages/conductor.php");
+	header("Location: guardar_reparacion.php?id=" . $reparacion_v);
 }
 
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -57,8 +44,13 @@ if (isset($_POST['actualizar'])) {
 	<!-- Custom styles for this template-->
 	<link href="../css/sb-admin-2.min.css" rel="stylesheet">
 
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<!-- Custom styles for this page -->
+	<link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
+	<!-- ICONOS -->
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
 </head>
 
@@ -105,12 +97,13 @@ if (isset($_POST['actualizar'])) {
 				<div id="collapsePages" class="collapse show" aria-labelledby="headingPages" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">Registro de:</h6>
-						<a class="collapse-item active" href="../pages/conductor.php">Conductor</a>
-						<a class="collapse-item " href="../pages/cliente.php">Cliente</a>
-						<a class="collapse-item" href="../pages/servicio.php">Servicio</a>
-						<a class="collapse-item" href="../pages/vehiculo.php">Vehiculo</a>
-						<div class="collapse-divider"></div>
+						<a class="collapse-item" href="conductor.php">Conductor</a>
+						<a class="collapse-item" href="cliente.php">Cliente</a>
+						<a class="collapse-item" href="servicio.php">Servicio</a>
+						<a class="collapse-item" href="vehiculo.php">Vehiculo</a>
+						<a class="collapse-item active" href="reparacion.php">Reparaciones</a>
 
+						<div class="collapse-divider"></div>
 					</div>
 				</div>
 			</li>
@@ -193,51 +186,123 @@ if (isset($_POST['actualizar'])) {
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<h1 class="h3 mb-4 text-center text-gray-900">Actualizar Conductor</h1>
+					<h1 class="h3 mb-4 text-center text-gray-900">Registro Reparaciones</h1>
 
-					<!-- FORMULARIO CONDUCTORES -->
-					<div class="card card-body form_reducir text-dark mb-4">
-						<form action="editar_conductor.php?id=<?php echo $_GET['id']; ?>" method="POST">
-							<div class="row form-group">
-								<div class="col-md-4">
-									<label for="inputNombre" class="form-label ">Nombre</label>
-									<input name="nombre_c" value="<?php echo $nombre ?>" type="text" class="form-control" id="inputNombre" required>
-								</div>
-								<div class="col-md-4">
-									<label for="inputApellido" class="form-label">Apellido</label>
-									<input name="apellido_c" value="<?php echo $apellido ?>" type="text" class="form-control" id="inputApellido" required>
-								</div>
-								<div class="col-md-4">
-									<label for="inputDireccion" class="form-label">Direccion</label>
-									<input name="direccion_c" value="<?php echo $direccion ?>" type="text" class="form-control" id="inputDireccion" required>
+					<!-- MENSAJE LUEGO DE GUARDAR CLIENTE -->
+					<?php if (isset($_SESSION['message'])) { ?>
+						<div class="row justify-content-center">
+							<div class="col-6">
+								<div class="alert alert-<?= $_SESSION['message_type'] ?> alert-dismissible" role="alert" id="liveAlert">
+									<?= $_SESSION['message'] ?>
+									<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 								</div>
 							</div>
-							<div class="row py-2 form-group">
-								<div class="col-md-3">
-									<label for="inputTel" class="form-label">Telefono</label>
-									<input name="telefono_c" value="<?php echo $telefono ?>" type="tel" class="form-control" id="inputTel" required>
+						</div>
+					<?php session_unset();
+					} ?>
+					<!-- FORMULARIO REPARACIONES -->
+					<div class="card card-body form_servicio text-gray-900 mb-4">
+						<form action="../crud/guardar_reparacion.php" method="POST">
+							<div class="row form-group justify-content-center">
+								<div class="col-md-4 ">
+									<label for="inputFecha" class="form-label ">Fecha</label>
+									<input type="date" class="form-control" name="fecha_re" id="inputFecha" required>
 								</div>
-								<div class="col-md-3">
-									<label for="inputCorreo" class="form-label">Correo</label>
-									<input name="email_c" value="<?php echo $correo ?>" type="email" class="form-control" id="inputCorreo" required>
+
+								<div class="col-md-4">
+									<label for="inputCosto" class="form-label">Costo</label>
+									<input type="number" class="form-control" name="costo_re" id="inputCosto" required>
 								</div>
-								<div class="col-md-3">
-									<label for="inputLic" class="form-label">Licencia</label>
-									<input name="licencia_c" value="<?php echo $licencia ?>" type="text" class="form-control" id="inputLic" required>
+								<div class="col-md-4">
+									<label for="inputVehiculo" class="form-label">Vehiculo</label>
+									<select name="reparacion_v" id="inputVehiculo" class="form-select form-select-md" required>
+										<!-- 	<option value="" selected>-- Seleccione el Conductor --</option> -->
+
+										<!-- CONSULTA CONDUCTOR-->
+										<?php
+										if (isset($_GET['id'])) {
+											$id = $_GET['id'];
+											print $id;
+											$query = "SELECT * FROM vehiculos WHERE id = $id";
+											$ejecutar = mysqli_query($conn, $query);
+											while ($row = mysqli_fetch_assoc($ejecutar)) { ?>
+												<option value="<?php echo $row['id']; ?>"><?php echo $row['placa']; ?></option>
+										<?php }
+										} ?>
+									</select>
 								</div>
-								<div class="col-md-3">
-									<label for="inputSalario" class="form-label">Salario</label>
-									<input name="salario_c" value="<?php echo $salario ?>" type="number" class="form-control" id="inputSalario" required>
+							</div>
+							<div class="row justify-content-center form-group">
+								<div class="col-md-7">
+									<label for="inputDesc" class="form-label ">Descripción</label>
+									<textarea name="descripcion_r" class="form-control" id="inputDesc" cols="20" rows="5" required></textarea>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-1 m-auto">
-									<button class="btn btn-primary" name="actualizar">Actualizar</button>
+									<input type="submit" value="Agregar" class="btn btn-primary " name="guardar">
 								</div>
 							</div>
 						</form>
 					</div>
 
+					<!-- TABLA -->
+					<div class="card shadow mb-4">
+						<div class="card-header py-3">
+							<h6 class="m-0 font-weight-bold text-primary">Tabla de Servicios</h6>
+						</div>
+						<div class="card-body">
+							<div class="table-responsive">
+								<table class="table table-bordered tabla" id="dataTable" width="100%" cellspacing="0">
+									<thead>
+										<tr>
+											<th>Fecha</th>
+											<th>Costo</th>
+											<th>Vehiculo</th>
+											<th>Descripción</th>
+											<th>Acciones</th>
+										</tr>
+									</thead>
+									<tfoot>
+										<tr>
+											<th>Fecha</th>
+											<th>Costo</th>
+											<th>Descripción</th>
+											<th>Vehiculo</th>
+											<th>Acciones</th>
+										</tr>
+									</tfoot>
+									<tbody>
+										<?php
+										if (isset($_GET['id'])) {
+											$id = $_GET['id'];
+											$query = "SELECT `reparaciones`.*, `vehiculos`.`placa`
+											FROM `reparaciones` 
+											LEFT JOIN `vehiculos` ON `reparaciones`.`vehiculos_id` = `vehiculos`.`id` where vehiculos_id = $id;";
+											$resultado = mysqli_query($conn, $query);
+
+											while ($row = mysqli_fetch_array($resultado)) { ?>
+											<tr>
+												<td><?php echo $row['fecha'] ?></td>
+												<td><?php echo $row['costo'] ?></td>
+												<td><?php echo $row['placa'] ?></td>
+												<td><?php echo $row['observacion'] ?></td>
+												<td class="text-center">
+													<a href="editar_reparacion.php?id=<?php echo $row['id'] ?>" class="btn btn-secondary">
+														<i class="far fa-edit"></i>
+													</a>
+													<a href="eliminar_reparacion.php?id=<?php echo $row['id'] ?>" class="btn btn-danger">
+														<i class="far fa-trash-alt"></i>
+													</a>
+												</td>
+											</tr>
+										<?php } } ?>
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
 
 				</div>
 				<!-- /.container-fluid -->
@@ -288,6 +353,7 @@ if (isset($_POST['actualizar'])) {
 	<!-- Bootstrap core JavaScript-->
 	<script src="../vendor/jquery/jquery.min.js"></script>
 	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
 	<!-- Core plugin JavaScript-->
 	<script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
@@ -295,6 +361,10 @@ if (isset($_POST['actualizar'])) {
 	<!-- Custom scripts for all pages-->
 	<script src="../js/sb-admin-2.min.js"></script>
 
+	<!-- Page level plugins -->
+	<script src="../vendor/datatables/jquery.dataTables.min.js"></script>
+	<script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
+	<script src="../js/demo/datatables-demo.js"></script>
 </body>
 
 </html>
