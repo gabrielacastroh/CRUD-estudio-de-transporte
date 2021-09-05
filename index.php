@@ -67,12 +67,27 @@
                         <a class="collapse-item" href="pages/cliente.php">Cliente</a>
                         <a class="collapse-item" href="pages/servicio.php">Servicio</a>
                         <a class="collapse-item" href="pages/vehiculo.php">Vehiculo</a>
-                        <a class="collapse-item" href="pages/reparacion.php">Reparaciones</a>
+                        <a class="collapse-item" href="pages/reparacion.php">Reparación</a>
+                        <a class="collapse-item" href="pages/infraccion.php">Infracción</a>
                     </div>
                 </div>
             </li>
 
-            <!-- Nav Item - Utilities Collapse Menu -->
+            <!-- Nav Item - Listado Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                    <i class="fas fa-list-alt"></i>
+                    <span>Listado</span>
+                </a>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Listado de:</h6>
+                        <a class="collapse-item" href="listado/list_infraccion.php">Infracciones</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Reporte Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-download fa-sm text-white-50"></i>
@@ -82,7 +97,6 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Generar Reporte:</h6>
                         <a class="collapse-item" href="tabla_pdf.php">Vehiculos</a>
-
                     </div>
                 </div>
             </li>

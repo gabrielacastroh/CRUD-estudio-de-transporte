@@ -97,13 +97,27 @@ if (isset($_POST['guardar'])) {
 				<div id="collapsePages" class="collapse show" aria-labelledby="headingPages" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">Registro de:</h6>
-						<a class="collapse-item" href="conductor.php">Conductor</a>
-						<a class="collapse-item" href="cliente.php">Cliente</a>
-						<a class="collapse-item" href="servicio.php">Servicio</a>
-						<a class="collapse-item" href="vehiculo.php">Vehiculo</a>
-						<a class="collapse-item active" href="reparacion.php">Reparaciones</a>
-
+						<a class="collapse-item " href="../pages/conductor.php">Conductor</a>
+						<a class="collapse-item " href="../pages/cliente.php">Cliente</a>
+						<a class="collapse-item" href="../pages/servicio.php">Servicio</a>
+						<a class="collapse-item" href="../pages/vehiculo.php">Vehiculo</a>
+						<a class="collapse-item active" href="../pages/reparacion.php">Reparación</a>
+						<a class="collapse-item" href="../pages/infraccion.php">Infracción</a>
 						<div class="collapse-divider"></div>
+					</div>
+				</div>
+			</li>
+
+			<!-- Nav Item - Listado Collapse Menu -->
+			<li class="nav-item">
+				<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+					<i class="fas fa-list-alt"></i>
+					<span>Listado</span>
+				</a>
+				<div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<h6 class="collapse-header">Listado de:</h6>
+						<a class="collapse-item" href="../listado/list_infraccion.php">Infracciones</a>
 					</div>
 				</div>
 			</li>
@@ -282,21 +296,22 @@ if (isset($_POST['guardar'])) {
 											$resultado = mysqli_query($conn, $query);
 
 											while ($row = mysqli_fetch_array($resultado)) { ?>
-											<tr>
-												<td><?php echo $row['fecha'] ?></td>
-												<td><?php echo $row['costo'] ?></td>
-												<td><?php echo $row['placa'] ?></td>
-												<td><?php echo $row['observacion'] ?></td>
-												<td class="text-center">
-													<a href="editar_reparacion.php?id=<?php echo $row['id'] ?>" class="btn btn-secondary">
-														<i class="far fa-edit"></i>
-													</a>
-													<a href="eliminar_reparacion.php?id=<?php echo $row['id'] ?>" class="btn btn-danger">
-														<i class="far fa-trash-alt"></i>
-													</a>
-												</td>
-											</tr>
-										<?php } } ?>
+												<tr>
+													<td><?php echo $row['fecha'] ?></td>
+													<td><?php echo $row['costo'] ?></td>
+													<td><?php echo $row['placa'] ?></td>
+													<td><?php echo $row['observacion'] ?></td>
+													<td class="text-center">
+														<a href="editar_reparacion.php?id=<?php echo $row['id'] ?>" class="btn btn-secondary">
+															<i class="far fa-edit"></i>
+														</a>
+														<a href="eliminar_reparacion.php?id=<?php echo $row['id'] ?>" class="btn btn-danger">
+															<i class="far fa-trash-alt"></i>
+														</a>
+													</td>
+												</tr>
+										<?php }
+										} ?>
 
 									</tbody>
 								</table>
@@ -349,6 +364,8 @@ if (isset($_POST['guardar'])) {
 			</div>
 		</div>
 	</div>
+
+
 
 	<!-- Bootstrap core JavaScript-->
 	<script src="../vendor/jquery/jquery.min.js"></script>

@@ -1,3 +1,28 @@
+<?php
+include('../connection.php');
+
+if (isset($_POST['guardar'])) {
+	$fecha_inf = $_POST['fecha_inf'];
+	$valor_inf = $_POST['valor_inf'];
+	$vehiculo_inf = $_POST['vehiculo_inf'];
+	$conductor_inf = $_POST['conductor_inf'];
+	$descripcion_inf = $_POST['descripcion_inf'];
+
+	$query = "INSERT INTO infracciones(fecha, descripcion, valor, conductores_id, vehiculos_id) VALUES ('$fecha_inf', '$descripcion_inf', '$valor_inf' , '$conductor_inf', '$vehiculo_inf')";
+
+	$result =  mysqli_query($conn, $query);
+	if (!$result) {
+		die("Query failed");
+	}
+
+	$_SESSION['message'] = 'Infracción guardada';
+	$_SESSION['message_type'] = 'success';
+
+	header("Location: guardar_infraccion.php?id=" . $vehiculo_inf);
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,10 +50,10 @@
 	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
 </head>
 
 <body id="page-top">
-	<?php include('../connection.php') ?>
 
 	<!-- Page Wrapper -->
 	<div id="wrapper">
@@ -71,12 +96,13 @@
 				<div id="collapsePages" class="collapse show" aria-labelledby="headingPages" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">Registro de:</h6>
-						<a class="collapse-item" href="conductor.php">Conductor</a>
-						<a class="collapse-item " href="cliente.php">Cliente</a>
-						<a class="collapse-item" href="servicio.php">Servicio</a>
-						<a class="collapse-item active" href="vehiculo.php">Vehiculo</a>
-						<a class="collapse-item" href="reparacion.php">Reparación</a>
-						<a class="collapse-item" href="infraccion.php">Infracción</a>
+						<a class="collapse-item " href="../pages/conductor.php">Conductor</a>
+						<a class="collapse-item " href="../pages/cliente.php">Cliente</a>
+						<a class="collapse-item" href="../pages/servicio.php">Servicio</a>
+						<a class="collapse-item" href="../pages/vehiculo.php">Vehiculo</a>
+						<a class="collapse-item " href="../pages/reparacion.php">Reparación</a>
+						<a class="collapse-item active" href="../pages/infraccion.php">Infracción</a>
+
 						<div class="collapse-divider"></div>
 					</div>
 				</div>
@@ -174,9 +200,9 @@
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<h1 class="h3 mb-4 text-center text-gray-900">Registro de Vehiculos</h1>
+					<h1 class="h3 mb-4 text-center text-gray-900">Registro Infracción</h1>
 
-					<!-- MENSAJE LUEGO DE GUARDAR VEHICULO -->
+					<!-- MENSAJE LUEGO DE GUARDAR CLIENTE -->
 					<?php if (isset($_SESSION['message'])) { ?>
 						<div class="row justify-content-center">
 							<div class="col-6">
@@ -188,64 +214,60 @@
 						</div>
 					<?php session_unset();
 					} ?>
-
-					<!-- FORMULARIO CONDUCTORES -->
-					<div class="card card-body form_reducir text-gray-900 mb-4">
-						<form action="../crud/guardar_vehiculo.php" method="POST">
-							<div class="row form-group">
-								<div class="col-md-4">
-									<label for="inputPlaca" class="form-label ">Placa</label>
-									<input name="placa_v" type="text" class="form-control" id="inputPlaca" required>
+					<!-- FORMULARIO INFRACCIONES -->
+					<div class="card card-body form_servicio text-gray-900 mb-4">
+						<form action="../crud/guardar_infraccion.php" method="POST">
+							<div class="row form-group justify-content-center">
+								<div class="col-md-5 ">
+									<label for="inputFecha" class="form-label ">Fecha</label>
+									<input type="date" class="form-control" name="fecha_inf" id="inputFecha" required>
 								</div>
-								<div class="col-md-4">
-									<label for="inputModelo" class="form-label">Modelo</label>
-									<input name="modelo_v[]" type="number" class="form-control" id="inputModelo" min="1980" max="2021" required>
+								<div class="col-md-5">
+									<label for="inputValor" class="form-label">Valor</label>
+									<input type="number" class="form-control" name="valor_inf" id="inputValor" required>
 								</div>
-								<div class="col-md-4">
-									<label for="inputMarca" class="form-label">Marca</label>
-									<input name="marca_v" type="text" class="form-control" id="inputMarca" required>
-								</div>
-
 							</div>
-							<div class="row py-2 form-group">
-								<div class="col-md-4">
-									<label for="inputCapacidad" class="form-label">Capacidad</label>
-									<input name="capacidad_v[]" type="number" class="form-control" id="inputCapacidad" required>
-								</div>
-								<div class="col-md-4">
-									<label for="inputCliente" class="form-label">Cliente</label>
-									<select name="cliente_v" id="inputCliente" class="form-select form-select-md" required>
-										<option value="" selected>-- Seleccione el Cliente--</option>
+							<div class="row form-group justify-content-center">
+								<div class="col-md-5">
+									<label for="inputVehiculo" class="form-label">Vehiculo</label>
+									<select name="vehiculo_inf" id="inputVehiculo" class="form-select form-select-md" required>
+										<!-- <option value="" selected>-- Seleccione el Vehiculo --</option> -->
 
-										<!-- CONSULTA CLIENTE-->
+										<!-- CONSULTA VEHICULO-->
 										<?php
-										$query = "SELECT id , nombre FROM clientes";
-										$ejecutar = mysqli_query($conn, $query);
-
-										while ($row = mysqli_fetch_assoc($ejecutar)) { ?>
-											<option value="<?php echo $row['id']; ?>"><?php echo $row['nombre']; ?></option>
-
-										<?php } ?>
-
+										if (isset($_GET['id'])) {
+											$id = $_GET['id'];
+											print $id;
+											$query = "SELECT * FROM vehiculos WHERE id = $id";
+											$ejecutar = mysqli_query($conn, $query);
+											while ($row = mysqli_fetch_assoc($ejecutar)) { ?>
+												<option value="<?php echo $row['id']; ?>"><?php echo $row['placa']; ?></option>
+										<?php }
+										} ?>
 									</select>
 								</div>
-
-								<div class="col-md-4">
+								<div class="col-md-5">
 									<label for="inputConductor" class="form-label">Conductor</label>
-									<select name="conductor_v" id="inputConductor" class="form-select form-select-md" required>
-
-										<option value="" selected>-- Seleccione el Conductor --</option>
+									<select name="conductor_inf" id="inputConductor" class="form-select form-select-md" required>
+										<!-- 	<option value="" selected>-- Seleccione el Conductor --</option> -->
 
 										<!-- CONSULTA CONDUCTOR-->
 										<?php
-										$query = "SELECT id , nombre FROM conductores";
-										$ejecutar = mysqli_query($conn, $query);
-
-										while ($row = mysqli_fetch_assoc($ejecutar)) { ?>
-											<option value="<?php echo $row['id']; ?>"><?php echo $row['nombre']; ?></option>
-
-										<?php } ?>
+										if (isset($_GET['id'])) {
+											$id = $_GET['id'];
+											$query = "SELECT `vehiculos`.*, `conductores`.`nombre` AS `con_nom`, `clientes`.`nombre` AS `cli_nom` FROM `vehiculos` LEFT JOIN `conductores` ON `vehiculos`.`conductores_id` = `conductores`.`id` LEFT JOIN `clientes` ON `vehiculos`.`clientes_id` = `clientes`.`id` WHERE `vehiculos`.`id` = $id;";
+											$ejecutar = mysqli_query($conn, $query);
+											while ($row = mysqli_fetch_assoc($ejecutar)) { ?>
+												<option value="<?php echo $row['conductores_id']; ?>"><?php echo $row['con_nom']; ?></option>
+										<?php }
+										} ?>
 									</select>
+								</div>
+							</div>
+							<div class="row justify-content-center form-group">
+								<div class="col-md-6">
+									<label for="inputDesc" class="form-label ">Descripción</label>
+									<textarea name="descripcion_inf" class="form-control" id="inputDesc" cols="20" rows="2" required></textarea>
 								</div>
 							</div>
 							<div class="row">
@@ -259,56 +281,58 @@
 					<!-- TABLA -->
 					<div class="card shadow mb-4">
 						<div class="card-header py-3">
-							<h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+							<h6 class="m-0 font-weight-bold text-primary">Información Vehiculo</h6>
 						</div>
 						<div class="card-body">
 							<div class="table-responsive">
 								<table class="table table-bordered tabla" id="dataTable" width="100%" cellspacing="0">
 									<thead>
 										<tr>
-											<th>Placa</th>
-											<th>Modelo</th>
-											<th>Marca</th>
-											<th>Capacidad</th>
-											<th>Cliente</th>
+											<th>Fecha</th>
+											<th>Valor</th>
+											<th>Vehiculo</th>
 											<th>Conductor</th>
+											<th>Descripción</th>
 											<th>Acciones</th>
 										</tr>
 									</thead>
 									<tfoot>
 										<tr>
-											<th>Placa</th>
-											<th>Modelo</th>
-											<th>Marca</th>
-											<th>Capacidad</th>
-											<th>Cliente</th>
+											<th>Fecha</th>
+											<th>Valor</th>
+											<th>Vehiculo</th>
 											<th>Conductor</th>
+											<th>Descripción</th>
 											<th>Acciones</th>
 										</tr>
 									</tfoot>
 									<tbody>
 										<?php
-										$query = "SELECT `ve`.*, `cli`.`nombre` AS `nomb_cli`, `con`.`nombre` AS `nomb_con` FROM `vehiculos` AS `ve` LEFT JOIN `clientes` AS `cli` ON `ve`.`clientes_id` = `cli`.`id` LEFT JOIN `conductores` AS `con` ON `ve`.`conductores_id` = `con`.`id`;";
-										$resultado = mysqli_query($conn, $query);
-
-										while ($row = mysqli_fetch_array($resultado)) { ?>
-											<tr>
-												<td><?php echo $row['placa'] ?></td>
-												<td><?php echo $row['modelo'] ?></td>
-												<td><?php echo $row['marca'] ?></td>
-												<td><?php echo $row['capacidad'] ?></td>
-												<td><?php echo $row['nomb_cli'] ?></td>
-												<td><?php echo $row['nomb_con'] ?></td>
-												<td class="text-center">
-													<a href="../crud/editar_vehiculo.php?id=<?php echo $row['id'] ?>" class="btn btn-secondary">
-														<i class="far fa-edit"></i>
-													</a>
-													<a href="../crud/eliminar_vehiculo.php?id=<?php echo $row['id'] ?>" class="btn btn-danger">
-														<i class="far fa-trash-alt"></i>
-													</a>
-												</td>
-											</tr>
-										<?php } ?>
+										if (isset($_GET['id'])) {
+											$id = $_GET['id'];
+											$query = "SELECT `infracciones`.*, `vehiculos`.`id` AS `ve_id`, `vehiculos`.`placa` AS `ve_placa`, `conductores`.`nombre` AS `con_nom`
+											FROM `infracciones` 
+											LEFT JOIN `vehiculos` ON `infracciones`.`vehiculos_id` = `vehiculos`.`id` 
+											LEFT JOIN `conductores` ON `infracciones`.`conductores_id` = `conductores`.`id` WHERE `vehiculos`.`id` = $id;";
+											$resultado = mysqli_query($conn, $query);
+											while ($row = mysqli_fetch_array($resultado)) { ?>
+												<tr>
+													<td><?php echo $row['fecha'] ?></td>
+													<td><?php echo $row['valor'] ?></td>
+													<td><?php echo $row['ve_placa'] ?></td>
+													<td><?php echo $row['con_nom'] ?></td>
+													<td><?php echo $row['descripcion'] ?></td>
+													<td class="text-center">
+														<a href="editar_infraccion.php?id=<?php echo $row['id'] ?>" class="btn btn-secondary">
+															<i class="far fa-edit"></i>
+														</a>
+														<a href="eliminar_infraccion.php?id=<?php echo $row['id'] ?>" class="btn btn-danger">
+															<i class="far fa-trash-alt"></i>
+														</a>
+													</td>
+												</tr>
+										<?php }
+										} ?>
 
 									</tbody>
 								</table>
@@ -362,8 +386,10 @@
 		</div>
 	</div>
 
-	<!-- Bootstrap core JavaScript-->
 	<script src="../vendor/jquery/jquery.min.js"></script>
+
+
+	<!-- Bootstrap core JavaScript-->
 	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
@@ -376,7 +402,6 @@
 	<!-- Page level plugins -->
 	<script src="../vendor/datatables/jquery.dataTables.min.js"></script>
 	<script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
 	<script src="../js/demo/datatables-demo.js"></script>
 </body>
 

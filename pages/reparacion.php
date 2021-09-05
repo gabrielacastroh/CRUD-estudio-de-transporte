@@ -77,9 +77,23 @@
 						<a class="collapse-item" href="cliente.php">Cliente</a>
 						<a class="collapse-item" href="servicio.php">Servicio</a>
 						<a class="collapse-item" href="vehiculo.php">Vehiculo</a>
-						<a class="collapse-item active" href="reparacion.php">Reparaciones</a>
-
+						<a class="collapse-item active" href="reparacion.php">Reparación</a>
+						<a class="collapse-item" href="infraccion.php">Infracción</a>
 						<div class="collapse-divider"></div>
+					</div>
+				</div>
+			</li>
+
+			<!-- Nav Item - Listado Collapse Menu -->
+			<li class="nav-item">
+				<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+					<i class="fas fa-list-alt"></i>
+					<span>Listado</span>
+				</a>
+				<div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<h6 class="collapse-header">Listado de:</h6>
+						<a class="collapse-item" href="../listado/list_infraccion.php">Infracciones</a>
 					</div>
 				</div>
 			</li>
@@ -162,7 +176,7 @@
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<h1 class="h3 mb-4 text-center text-gray-900">Registro Reparaciones</h1>
+					<h1 class="h3 mb-4 text-center text-gray-900">Registro Reparación</h1>
 
 					<!-- MENSAJE LUEGO DE GUARDAR CLIENTE -->
 					<?php if (isset($_SESSION['message'])) { ?>

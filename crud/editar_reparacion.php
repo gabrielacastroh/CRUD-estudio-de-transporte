@@ -21,7 +21,7 @@ if (isset($_POST['actualizar'])) {
 	$costo_r = $_POST['costo_re'];
 	$repa_v = $_POST['reparacion_v'];
 	$obs_r = $_POST['observacion_r'];
-	
+
 	$query = "UPDATE reparaciones SET fecha = '$fecha_r', costo = '$costo_r', vehiculos_id = '$repa_v' ,observacion = '$obs_r' WHERE id = $id";
 	mysqli_query($conn, $query);
 	$_SESSION['message'] = 'Reparación Actualizado';
@@ -103,13 +103,28 @@ if (isset($_POST['actualizar'])) {
 				<div id="collapsePages" class="collapse show" aria-labelledby="headingPages" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">Registro de:</h6>
-						<a class="collapse-item" href="conductor.php">Conductor</a>
-						<a class="collapse-item" href="cliente.php">Cliente</a>
-						<a class="collapse-item" href="servicio.php">Servicio</a>
-						<a class="collapse-item" href="vehiculo.php">Vehiculo</a>
-						<a class="collapse-item active" href="reparacion.php">Reparaciones</a>
+						<a class="collapse-item " href="../pages/conductor.php">Conductor</a>
+						<a class="collapse-item " href="../pages/cliente.php">Cliente</a>
+						<a class="collapse-item" href="../pages/servicio.php">Servicio</a>
+						<a class="collapse-item" href="../pages/vehiculo.php">Vehiculo</a>
+						<a class="collapse-item active" href="../pages/reparacion.php">Reparación</a>
+						<a class="collapse-item" href="../pages/infraccion.php">Infracción</a>
 
 						<div class="collapse-divider"></div>
+					</div>
+				</div>
+			</li>
+
+			<!-- Nav Item - Listado Collapse Menu -->
+			<li class="nav-item">
+				<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+					<i class="fas fa-list-alt"></i>
+					<span>Listado</span>
+				</a>
+				<div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<h6 class="collapse-header">Listado de:</h6>
+						<a class="collapse-item" href="../listado/list_infraccion.php">Infracciones</a>
 					</div>
 				</div>
 			</li>

@@ -25,9 +25,11 @@
 	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
 </head>
 
 <body id="page-top">
+
 	<?php include('../connection.php') ?>
 
 	<!-- Page Wrapper -->
@@ -72,11 +74,11 @@
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">Registro de:</h6>
 						<a class="collapse-item" href="conductor.php">Conductor</a>
-						<a class="collapse-item " href="cliente.php">Cliente</a>
+						<a class="collapse-item" href="cliente.php">Cliente</a>
 						<a class="collapse-item" href="servicio.php">Servicio</a>
-						<a class="collapse-item active" href="vehiculo.php">Vehiculo</a>
+						<a class="collapse-item" href="vehiculo.php">Vehiculo</a>
 						<a class="collapse-item" href="reparacion.php">Reparación</a>
-						<a class="collapse-item" href="infraccion.php">Infracción</a>
+						<a class="collapse-item active" href="infraccion.php">Infracción</a>
 						<div class="collapse-divider"></div>
 					</div>
 				</div>
@@ -174,9 +176,9 @@
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<h1 class="h3 mb-4 text-center text-gray-900">Registro de Vehiculos</h1>
+					<h1 class="h3 mb-4 text-center text-gray-900">Registro Infracción</h1>
 
-					<!-- MENSAJE LUEGO DE GUARDAR VEHICULO -->
+					<!-- MENSAJE LUEGO DE GUARDAR CLIENTE -->
 					<?php if (isset($_SESSION['message'])) { ?>
 						<div class="row justify-content-center">
 							<div class="col-6">
@@ -188,69 +190,30 @@
 						</div>
 					<?php session_unset();
 					} ?>
+					<!-- FORMULARIO INFRACCIONES -->
+					<div class="card card-body form_reducir text-gray-900 mb-4 col-md-5">
+						<form action="infraccion.php" method="POST">
+							<div class="col-md">
+								<label for="inputVehiculo" class="form-label h5">Vehiculo</label>
+								<select name="id_vehiculo" id="inputVehiculo" class="form-select form-select-md" required>
+									<option value="" selected>-- Seleccione la placa del vehiculo--</option>
 
-					<!-- FORMULARIO CONDUCTORES -->
-					<div class="card card-body form_reducir text-gray-900 mb-4">
-						<form action="../crud/guardar_vehiculo.php" method="POST">
-							<div class="row form-group">
-								<div class="col-md-4">
-									<label for="inputPlaca" class="form-label ">Placa</label>
-									<input name="placa_v" type="text" class="form-control" id="inputPlaca" required>
-								</div>
-								<div class="col-md-4">
-									<label for="inputModelo" class="form-label">Modelo</label>
-									<input name="modelo_v[]" type="number" class="form-control" id="inputModelo" min="1980" max="2021" required>
-								</div>
-								<div class="col-md-4">
-									<label for="inputMarca" class="form-label">Marca</label>
-									<input name="marca_v" type="text" class="form-control" id="inputMarca" required>
-								</div>
+									<!-- CONSULTA CLIENTE-->
+									<?php
+									$query = "SELECT id , placa FROM vehiculos";
+									$ejecutar = mysqli_query($conn, $query);
 
+									while ($row = mysqli_fetch_assoc($ejecutar)) { ?>
+										<option value="<?php echo $row['id']; ?>">
+											<?php echo $row['placa']; ?>
+										</option>
+
+									<?php } ?>
+								</select>
 							</div>
-							<div class="row py-2 form-group">
-								<div class="col-md-4">
-									<label for="inputCapacidad" class="form-label">Capacidad</label>
-									<input name="capacidad_v[]" type="number" class="form-control" id="inputCapacidad" required>
-								</div>
-								<div class="col-md-4">
-									<label for="inputCliente" class="form-label">Cliente</label>
-									<select name="cliente_v" id="inputCliente" class="form-select form-select-md" required>
-										<option value="" selected>-- Seleccione el Cliente--</option>
-
-										<!-- CONSULTA CLIENTE-->
-										<?php
-										$query = "SELECT id , nombre FROM clientes";
-										$ejecutar = mysqli_query($conn, $query);
-
-										while ($row = mysqli_fetch_assoc($ejecutar)) { ?>
-											<option value="<?php echo $row['id']; ?>"><?php echo $row['nombre']; ?></option>
-
-										<?php } ?>
-
-									</select>
-								</div>
-
-								<div class="col-md-4">
-									<label for="inputConductor" class="form-label">Conductor</label>
-									<select name="conductor_v" id="inputConductor" class="form-select form-select-md" required>
-
-										<option value="" selected>-- Seleccione el Conductor --</option>
-
-										<!-- CONSULTA CONDUCTOR-->
-										<?php
-										$query = "SELECT id , nombre FROM conductores";
-										$ejecutar = mysqli_query($conn, $query);
-
-										while ($row = mysqli_fetch_assoc($ejecutar)) { ?>
-											<option value="<?php echo $row['id']; ?>"><?php echo $row['nombre']; ?></option>
-
-										<?php } ?>
-									</select>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-1 m-auto">
-									<input type="submit" value="Agregar" class="btn btn-primary " name="guardar">
+							<div class="row mt-3">
+								<div class="col-md-2 m-auto">
+									<input type="submit" value="Mostrar" class="btn btn-primary " name="mostrar">
 								</div>
 							</div>
 						</form>
@@ -259,7 +222,7 @@
 					<!-- TABLA -->
 					<div class="card shadow mb-4">
 						<div class="card-header py-3">
-							<h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+							<h6 class="m-0 font-weight-bold text-primary">Información Vehiculo</h6>
 						</div>
 						<div class="card-body">
 							<div class="table-responsive">
@@ -267,49 +230,47 @@
 									<thead>
 										<tr>
 											<th>Placa</th>
-											<th>Modelo</th>
 											<th>Marca</th>
-											<th>Capacidad</th>
-											<th>Cliente</th>
 											<th>Conductor</th>
+											<th>Cliente</th>
 											<th>Acciones</th>
 										</tr>
 									</thead>
 									<tfoot>
 										<tr>
 											<th>Placa</th>
-											<th>Modelo</th>
 											<th>Marca</th>
-											<th>Capacidad</th>
-											<th>Cliente</th>
 											<th>Conductor</th>
+											<th>Cliente</th>
 											<th>Acciones</th>
 										</tr>
 									</tfoot>
 									<tbody>
 										<?php
-										$query = "SELECT `ve`.*, `cli`.`nombre` AS `nomb_cli`, `con`.`nombre` AS `nomb_con` FROM `vehiculos` AS `ve` LEFT JOIN `clientes` AS `cli` ON `ve`.`clientes_id` = `cli`.`id` LEFT JOIN `conductores` AS `con` ON `ve`.`conductores_id` = `con`.`id`;";
-										$resultado = mysqli_query($conn, $query);
+										if (isset($_POST['mostrar'])) {
+											$id = $_POST['id_vehiculo'];
+											$query = "SELECT `vehiculos`.*, `conductores`.`nombre` AS `con_nom`, `clientes`.`nombre` AS `cli_nom` FROM `vehiculos` LEFT JOIN `conductores` ON `vehiculos`.`conductores_id` = `conductores`.`id` LEFT JOIN `clientes` ON `vehiculos`.`clientes_id` = `clientes`.`id` WHERE `vehiculos`.`id` = $id;";
+											$result = mysqli_query($conn, $query);
+											while ($row = mysqli_fetch_array($result)) { ?>
+												<tr>
+													<td><?php echo $row['placa'] ?></td>
+													<td><?php echo $row['marca'] ?></td>
+													<td><?php echo $row['con_nom'] ?></td>
+													<td><?php echo $row['cli_nom'] ?></td>
+													<td class="text-center d-flex justify-content-around">
+														<a href="../crud/guardar_infraccion.php?id=<?php echo $row['id'] ?>" class="btn btn-success">
+															<i class="fas fa-plus"></i>
+														</a>
+														<!-- 														<a href="../crud/guardar_reparacion.php?id=<?php echo $row['id'] ?>" class="btn btn-success">
+															<i class="fas fa-plus"></i>
+														</a> <a href="../crud/guardar_reparacion.php?id=<?php echo $row['id'] ?>" class="btn btn-success">
+															<i class="fas fa-plus"></i>
+														</a> -->
+													</td>
 
-										while ($row = mysqli_fetch_array($resultado)) { ?>
-											<tr>
-												<td><?php echo $row['placa'] ?></td>
-												<td><?php echo $row['modelo'] ?></td>
-												<td><?php echo $row['marca'] ?></td>
-												<td><?php echo $row['capacidad'] ?></td>
-												<td><?php echo $row['nomb_cli'] ?></td>
-												<td><?php echo $row['nomb_con'] ?></td>
-												<td class="text-center">
-													<a href="../crud/editar_vehiculo.php?id=<?php echo $row['id'] ?>" class="btn btn-secondary">
-														<i class="far fa-edit"></i>
-													</a>
-													<a href="../crud/eliminar_vehiculo.php?id=<?php echo $row['id'] ?>" class="btn btn-danger">
-														<i class="far fa-trash-alt"></i>
-													</a>
-												</td>
-											</tr>
-										<?php } ?>
-
+												</tr>
+										<?php }
+										} ?>
 									</tbody>
 								</table>
 							</div>
@@ -362,8 +323,10 @@
 		</div>
 	</div>
 
-	<!-- Bootstrap core JavaScript-->
 	<script src="../vendor/jquery/jquery.min.js"></script>
+
+
+	<!-- Bootstrap core JavaScript-->
 	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
@@ -376,7 +339,6 @@
 	<!-- Page level plugins -->
 	<script src="../vendor/datatables/jquery.dataTables.min.js"></script>
 	<script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
 	<script src="../js/demo/datatables-demo.js"></script>
 </body>
 
