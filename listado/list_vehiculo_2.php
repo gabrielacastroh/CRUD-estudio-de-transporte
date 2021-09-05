@@ -25,11 +25,9 @@
 	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
 </head>
 
 <body id="page-top">
-
 	<?php include('../connection.php') ?>
 
 	<!-- Page Wrapper -->
@@ -63,7 +61,6 @@
 			<div class="sidebar-heading">
 				Interface
 			</div>
-
 			<!-- Nav Item - Pages Collapse Menu -->
 			<li class="nav-item ">
 				<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
@@ -84,7 +81,6 @@
 				</div>
 			</li>
 
-			<!-- Nav Item - Listado Collapse Menu -->
 			<li class="nav-item active">
 				<a class="nav-link " href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
 					<i class="fas fa-list-alt"></i>
@@ -93,9 +89,9 @@
 				<div id="collapseThree" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">Listado de:</h6>
-						<a class="collapse-item active" href="list_infraccion.php">Infracciones (Punto 2)</a>
+						<a class="collapse-item " href="list_infraccion.php">Infracciones (Punto 2)</a>
 						<a class="collapse-item" href="list_vehiculo.php">Vehiculos (Punto 3) </a>
-						<a class="collapse-item" href="list_vehiculo_2.php">Vehiculos (Punto 4) </a>
+						<a class="collapse-item active" href="list_vehiculo_2.php">Vehiculos (Punto 4) </a>
 					</div>
 				</div>
 			</li>
@@ -178,9 +174,9 @@
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<h1 class="h3 mb-4 text-center text-gray-900">Listar Infracción</h1>
+					<h1 class="h3 mb-4 text-center text-gray-900">Listado de Vehiculos</h1>
 
-					<!-- MENSAJE LUEGO DE GUARDAR CLIENTE -->
+					<!-- MENSAJE LUEGO DE GUARDAR VEHICULO -->
 					<?php if (isset($_SESSION['message'])) { ?>
 						<div class="row justify-content-center">
 							<div class="col-6">
@@ -192,31 +188,12 @@
 						</div>
 					<?php session_unset();
 					} ?>
-					<!-- FORMULARIO INFRACCIONES -->
-					<div class="card card-body form_reducir text-gray-900 mb-4 col-md-8">
-						<form action="list_infraccion.php" method="POST">
-							<div class="row form-group justify-content-center">
-								<div class="col-md-6">
-									<label for="inputFechaI" class="form-label h5">Fecha inicio</label>
-									<input type="date" class="form-control" name="fecha_inicio" id="inputFechaI" required>
-								</div>
-								<div class="col-md-6">
-									<label for="inputFechaF" class="form-label h5">Fecha Fin</label>
-									<input type="date" class="form-control" name="fecha_fin" id="inputFechaF" required>
-								</div>
-							</div>
-							<div class="row mt-3">
-								<div class="col-md-2 m-auto">
-									<input type="submit" value="Mostrar" class="btn btn-primary " name="mostrar">
-								</div>
-							</div>
-						</form>
-					</div>
+
 
 					<!-- TABLA -->
 					<div class="card shadow mb-4">
 						<div class="card-header py-3">
-							<h6 class="m-0 font-weight-bold text-primary">Listado de Infracciones</h6>
+							<h6 class="m-0 font-weight-bold text-primary">Listado de Vehiculos</h6>
 						</div>
 						<div class="card-body">
 							<div class="table-responsive">
@@ -224,41 +201,46 @@
 									<thead>
 										<tr>
 											<th>ID</th>
-											<th>Fecha</th>
-											<th>Valor</th>
+											<th>Placa</th>
+											<th>Modelo</th>
+											<th>Marca</th>
+											<th>Cliente</th>
+											<th>Conductor</th>
 											<th>Acciones</th>
 										</tr>
 									</thead>
 									<tfoot>
 										<tr>
 											<th>ID</th>
-											<th>Fecha</th>
-											<th>Valor</th>
+											<th>Placa</th>
+											<th>Modelo</th>
+											<th>Marca</th>
+											<th>Cliente</th>
+											<th>Conductor</th>
 											<th>Acciones</th>
 										</tr>
 									</tfoot>
 									<tbody>
 										<?php
-										if (isset($_POST['mostrar'])) {
-											/* 											$id = $_POST['id_vehiculo']; */
-											$fe_inicio = $_POST['fecha_inicio'];
-											$fe_fin = $_POST['fecha_fin'];
-											$query = "SELECT * FROM infracciones WHERE fecha BETWEEN '$fe_inicio' AND '$fe_fin' ;";
-											$result = mysqli_query($conn, $query);
-											while ($row = mysqli_fetch_array($result)) { ?>
-												<tr>
-													<td><?php echo $row['id'] ?></td>
-													<td><?php echo $row['fecha'] ?></td>
-													<td><?php echo $row['valor'] ?></td>
-													<td class="text-center d-flex justify-content-around">
-														<a href="info_infraccion.php?id=<?php echo $row['id'] ?>" class="btn btn-secondary">
-															<i class="fas fa-info-circle"></i>
-														</a>
-													</td>
+										$query = "SELECT `ve`.*, `cli`.`nombre` AS `nomb_cli`, `con`.`nombre` AS `nomb_con` FROM `vehiculos` AS `ve` LEFT JOIN `clientes` AS `cli` ON `ve`.`clientes_id` = `cli`.`id` LEFT JOIN `conductores` AS `con` ON `ve`.`conductores_id` = `con`.`id`;";
+										$resultado = mysqli_query($conn, $query);
 
-												</tr>
-										<?php }
-										} ?>
+										while ($row = mysqli_fetch_array($resultado)) { ?>
+											<tr>
+												<td><?php echo $row['id'] ?></td>
+												<td><?php echo $row['placa'] ?></td>
+												<td><?php echo $row['modelo'] ?></td>
+												<td><?php echo $row['marca'] ?></td>
+												<td><?php echo $row['nomb_cli'] ?></td>
+												<td><?php echo $row['nomb_con'] ?></td>
+												<td class="text-center">
+													<a href="editar_vehiculo_2.php?id=<?php echo $row['id'] ?>" class="btn btn-secondary fs-6">Editar propietario y conductor
+														<i class="far fa-edit"></i>
+													</a>
+												</td>
+											</tr>
+										<?php } ?>
+
 									</tbody>
 								</table>
 							</div>
@@ -311,10 +293,8 @@
 		</div>
 	</div>
 
-	<script src="../vendor/jquery/jquery.min.js"></script>
-
-
 	<!-- Bootstrap core JavaScript-->
+	<script src="../vendor/jquery/jquery.min.js"></script>
 	<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
@@ -327,6 +307,7 @@
 	<!-- Page level plugins -->
 	<script src="../vendor/datatables/jquery.dataTables.min.js"></script>
 	<script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
 	<script src="../js/demo/datatables-demo.js"></script>
 </body>
 

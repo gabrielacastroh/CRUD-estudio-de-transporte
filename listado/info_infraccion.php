@@ -93,7 +93,9 @@
 				<div id="collapseThree" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">Listado de:</h6>
-						<a class="collapse-item active" href="list_infraccion.php">Infracciones</a>
+						<a class="collapse-item active" href="list_infraccion.php">Infracciones (Punto 2)</a>
+						<a class="collapse-item" href="list_vehiculo.php">Vehiculos (Punto 3) </a>
+						<a class="collapse-item" href="list_vehiculo_2.php">Vehiculos (Punto 4) </a>
 					</div>
 				</div>
 			</li>

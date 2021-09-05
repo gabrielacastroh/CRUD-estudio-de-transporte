@@ -93,8 +93,8 @@
 				<div id="collapseThree" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">Listado de:</h6>
-						<a class="collapse-item active" href="list_infraccion.php">Infracciones (Punto 2)</a>
-						<a class="collapse-item" href="list_vehiculo.php">Vehiculos (Punto 3) </a>
+						<a class="collapse-item " href="list_infraccion.php">Infracciones (Punto 2)</a>
+						<a class="collapse-item active" href="list_vehiculo.php">Vehiculos (Punto 3) </a>
 						<a class="collapse-item" href="list_vehiculo_2.php">Vehiculos (Punto 4) </a>
 					</div>
 				</div>
@@ -178,7 +178,7 @@
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<h1 class="h3 mb-4 text-center text-gray-900">Listar Infracción</h1>
+					<h1 class="h3 mb-4 text-center text-gray-900">Listado de Vehiculos</h1>
 
 					<!-- MENSAJE LUEGO DE GUARDAR CLIENTE -->
 					<?php if (isset($_SESSION['message'])) { ?>
@@ -193,30 +193,10 @@
 					<?php session_unset();
 					} ?>
 					<!-- FORMULARIO INFRACCIONES -->
-					<div class="card card-body form_reducir text-gray-900 mb-4 col-md-8">
-						<form action="list_infraccion.php" method="POST">
-							<div class="row form-group justify-content-center">
-								<div class="col-md-6">
-									<label for="inputFechaI" class="form-label h5">Fecha inicio</label>
-									<input type="date" class="form-control" name="fecha_inicio" id="inputFechaI" required>
-								</div>
-								<div class="col-md-6">
-									<label for="inputFechaF" class="form-label h5">Fecha Fin</label>
-									<input type="date" class="form-control" name="fecha_fin" id="inputFechaF" required>
-								</div>
-							</div>
-							<div class="row mt-3">
-								<div class="col-md-2 m-auto">
-									<input type="submit" value="Mostrar" class="btn btn-primary " name="mostrar">
-								</div>
-							</div>
-						</form>
-					</div>
-
 					<!-- TABLA -->
 					<div class="card shadow mb-4">
 						<div class="card-header py-3">
-							<h6 class="m-0 font-weight-bold text-primary">Listado de Infracciones</h6>
+							<h6 class="m-0 font-weight-bold text-primary">Listado de Vehiculos</h6>
 						</div>
 						<div class="card-body">
 							<div class="table-responsive">
@@ -224,6 +204,7 @@
 									<thead>
 										<tr>
 											<th>ID</th>
+											<th>Descripción</th>
 											<th>Fecha</th>
 											<th>Valor</th>
 											<th>Acciones</th>
@@ -232,6 +213,7 @@
 									<tfoot>
 										<tr>
 											<th>ID</th>
+											<th>Descripción</th>
 											<th>Fecha</th>
 											<th>Valor</th>
 											<th>Acciones</th>
@@ -239,26 +221,25 @@
 									</tfoot>
 									<tbody>
 										<?php
-										if (isset($_POST['mostrar'])) {
-											/* 											$id = $_POST['id_vehiculo']; */
-											$fe_inicio = $_POST['fecha_inicio'];
-											$fe_fin = $_POST['fecha_fin'];
-											$query = "SELECT * FROM infracciones WHERE fecha BETWEEN '$fe_inicio' AND '$fe_fin' ;";
+										if (isset($_GET['id'])) {
+											$id = $_GET['id'];
+											$query = "SELECT * FROM infracciones WHERE vehiculos_id = $id ;";
 											$result = mysqli_query($conn, $query);
 											while ($row = mysqli_fetch_array($result)) { ?>
 												<tr>
 													<td><?php echo $row['id'] ?></td>
+													<td><?php echo $row['descripcion'] ?></td>
 													<td><?php echo $row['fecha'] ?></td>
 													<td><?php echo $row['valor'] ?></td>
 													<td class="text-center d-flex justify-content-around">
-														<a href="info_infraccion.php?id=<?php echo $row['id'] ?>" class="btn btn-secondary">
-															<i class="fas fa-info-circle"></i>
+														<a href="../crud/eliminar_infraccion.php?id=<?php echo $row['id'] ?>" class="btn btn-danger">
+															<i class="far fa-trash-alt"></i>
 														</a>
 													</td>
-
 												</tr>
 										<?php }
 										} ?>
+
 									</tbody>
 								</table>
 							</div>
