@@ -98,7 +98,7 @@
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Generar Reporte:</h6>
-                        <a class="collapse-item" href="tabla_pdf.php">Vehiculos</a>
+                        <a class="collapse-item" href="detalle_infraccion.php">Reporte Infracción</a>
                     </div>
                 </div>
             </li>
@@ -174,7 +174,7 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h1 mb-0 text-gray-900">Dashboard</h1>
-                        <a href="tabla_pdf.php" class="d-none d-sm-inline-block p-2 btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-90"></i> Generate Report</a>
+                        <a href="detalle_infraccion.php" class="d-none d-sm-inline-block p-2 btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-90"></i> Generar Reporte</a>
                     </div>
 
                     <div class="row py-4">
