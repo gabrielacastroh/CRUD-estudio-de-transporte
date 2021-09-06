@@ -70,7 +70,7 @@ $result = mysqli_query($conn, $query);
 while ($row = mysqli_fetch_array($result)) {
 
 	$pdf->Cell(16, 10, $row['cli_id'], 1, 0, 'C', 0);
-	$pdf->Cell(69, 10, $row['cli_nom'] . $row['cli_ape'] , 1, 0, 'C', 0);
+	$pdf->Cell(69, 10, $row['cli_nom']. " " . $row['cli_ape'] , 1, 0, 'C', 0);
 	$pdf->Cell(55, 10, $row['cli_dir'], 1, 0, 'C', 0);
 	$pdf->Cell(50, 10, $row['cli_tel'], 1, 0, 'C', 0);
 }

@@ -2,8 +2,8 @@
 -- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost
--- Tiempo de generación: 31-08-2021 a las 22:30:37
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 06-09-2021 a las 07:42:24
 -- Versión del servidor: 10.4.20-MariaDB
 -- Versión de PHP: 8.0.9
 
@@ -60,6 +60,39 @@ CREATE TABLE `conductores` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `infracciones`
+--
+
+CREATE TABLE `infracciones` (
+  `id` int(11) NOT NULL,
+  `fecha` date NOT NULL,
+  `descripcion` varchar(60) NOT NULL,
+  `valor` double NOT NULL,
+  `conductores_id` int(11) NOT NULL,
+  `vehiculos_id` int(11) NOT NULL,
+  `created` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `reparaciones`
+--
+
+CREATE TABLE `reparaciones` (
+  `id` int(11) NOT NULL,
+  `fecha` date NOT NULL,
+  `costo` double NOT NULL,
+  `vehiculos_id` int(11) NOT NULL,
+  `observacion` varchar(70) NOT NULL,
+  `created` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `servicios`
 --
 
@@ -106,6 +139,21 @@ ALTER TABLE `conductores`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `infracciones`
+--
+ALTER TABLE `infracciones`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_conductores_id` (`conductores_id`),
+  ADD KEY `fk_vehiculos_id` (`vehiculos_id`);
+
+--
+-- Indices de la tabla `reparaciones`
+--
+ALTER TABLE `reparaciones`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `vehiculos_id` (`vehiculos_id`);
+
+--
 -- Indices de la tabla `servicios`
 --
 ALTER TABLE `servicios`
@@ -136,6 +184,18 @@ ALTER TABLE `conductores`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `infracciones`
+--
+ALTER TABLE `infracciones`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `reparaciones`
+--
+ALTER TABLE `reparaciones`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `servicios`
 --
 ALTER TABLE `servicios`
@@ -150,6 +210,19 @@ ALTER TABLE `vehiculos`
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `infracciones`
+--
+ALTER TABLE `infracciones`
+  ADD CONSTRAINT `fk_conductores_id` FOREIGN KEY (`conductores_id`) REFERENCES `conductores` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_vehiculos_id` FOREIGN KEY (`vehiculos_id`) REFERENCES `vehiculos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `reparaciones`
+--
+ALTER TABLE `reparaciones`
+  ADD CONSTRAINT `fk_vehiculos` FOREIGN KEY (`vehiculos_id`) REFERENCES `vehiculos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `vehiculos`
