@@ -179,7 +179,7 @@
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<h1 class="h3 mb-4 text-center text-gray-900">Listar Cliente</h1>
+					<h1 class="h3 mb-4 text-center text-gray-900">Listado de Reparaciones del vehiculo</h1>
 
 					<!-- MENSAJE LUEGO DE GUARDAR CLIENTE -->
 					<?php if (isset($_SESSION['message'])) { ?>
@@ -196,7 +196,7 @@
 					<!-- TABLA -->
 					<div class="card shadow mb-4">
 						<div class="card-header py-3">
-							<h6 class="m-0 font-weight-bold text-primary">Listado de Infracciones</h6>
+							<h6 class="m-0 font-weight-bold text-primary">Listado de Reparaciones por cliente</h6>
 						</div>
 						<div class="card-body">
 							<div class="table-responsive">
