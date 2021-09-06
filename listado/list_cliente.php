@@ -1,28 +1,3 @@
-<?php
-include('../connection.php');
-
-if (isset($_POST['guardar'])) {
-	$fecha_inf = $_POST['fecha_inf'];
-	$valor_inf = $_POST['valor_inf'];
-	$vehiculo_inf = $_POST['vehiculo_inf'];
-	$conductor_inf = $_POST['conductor_inf'];
-	$descripcion_inf = $_POST['descripcion_inf'];
-
-	$query = "INSERT INTO infracciones(fecha, descripcion, valor, conductores_id, vehiculos_id) VALUES ('$fecha_inf', '$descripcion_inf', '$valor_inf' , '$conductor_inf', '$vehiculo_inf')";
-
-	$result =  mysqli_query($conn, $query);
-	if (!$result) {
-		die("Query failed");
-	}
-
-	$_SESSION['message'] = 'Infracción guardada';
-	$_SESSION['message_type'] = 'success';
-
-	header("Location: guardar_infraccion.php?id=" . $vehiculo_inf);
-}
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -54,6 +29,8 @@ if (isset($_POST['guardar'])) {
 </head>
 
 <body id="page-top">
+
+	<?php include('../connection.php') ?>
 
 	<!-- Page Wrapper -->
 	<div id="wrapper">
@@ -88,39 +65,39 @@ if (isset($_POST['guardar'])) {
 			</div>
 
 			<!-- Nav Item - Pages Collapse Menu -->
-			<li class="nav-item active">
-				<a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+			<li class="nav-item ">
+				<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
 					<i class="fas fa-fw fa-folder"></i>
 					<span>Registro</span>
 				</a>
-				<div id="collapsePages" class="collapse show" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+				<div id="collapsePages" class="collapse " aria-labelledby="headingPages" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">Registro de:</h6>
-						<a class="collapse-item " href="../pages/conductor.php">Conductor</a>
-						<a class="collapse-item " href="../pages/cliente.php">Cliente</a>
+						<a class="collapse-item" href="../pages/conductor.php">Conductor</a>
+						<a class="collapse-item" href="../pages/cliente.php">Cliente</a>
 						<a class="collapse-item" href="../pages/servicio.php">Servicio</a>
 						<a class="collapse-item" href="../pages/vehiculo.php">Vehiculo</a>
-						<a class="collapse-item " href="../pages/reparacion.php">Reparación</a>
-						<a class="collapse-item active" href="../pages/infraccion.php">Infracción</a>
-
+						<a class="collapse-item" href="../pages/reparacion.php">Reparación</a>
+						<a class="collapse-item" href="../pages/infraccion.php">Infracción</a>
 						<div class="collapse-divider"></div>
 					</div>
 				</div>
 			</li>
 
 			<!-- Nav Item - Listado Collapse Menu -->
-			<li class="nav-item">
-				<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+			<li class="nav-item active">
+				<a class="nav-link " href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
 					<i class="fas fa-list-alt"></i>
 					<span>Listado</span>
 				</a>
-				<div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+				<div id="collapseThree" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">Listado de:</h6>
-						<a class="collapse-item" href="../listado/list_infraccion.php">Infracciones (Punto 2)</a>
-						<a class="collapse-item" href="../listado/list_vehiculo.php">Vehiculos (Punto 3) </a>
-						<a class="collapse-item" href="../listado/list_vehiculo_2.php">Vehiculos (Punto 4) </a>
-						<a class="collapse-item" href="../listado/list_cliente.php">Lista Cliente (Punto 6) </a>
+						<a class="collapse-item " href="list_infraccion.php">Infracciones (Punto 2)</a>
+						<a class="collapse-item" href="list_vehiculo.php">Vehiculos (Punto 3) </a>
+						<a class="collapse-item" href="list_vehiculo_2.php">Vehiculos (Punto 4) </a>
+						<a class="collapse-item active" href="list_cliente.php">Lista Cliente (Punto 6) </a>
+
 					</div>
 				</div>
 			</li>
@@ -135,6 +112,7 @@ if (isset($_POST['guardar'])) {
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">Generar Reporte:</h6>
 						<a class="collapse-item" href="../detalle_infraccion.php">Reporte Infracción</a>
+
 
 					</div>
 				</div>
@@ -203,7 +181,7 @@ if (isset($_POST['guardar'])) {
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<h1 class="h3 mb-4 text-center text-gray-900">Registro Infracción</h1>
+					<h1 class="h3 mb-4 text-center text-gray-900">Listar Cliente</h1>
 
 					<!-- MENSAJE LUEGO DE GUARDAR CLIENTE -->
 					<?php if (isset($_SESSION['message'])) { ?>
@@ -218,64 +196,29 @@ if (isset($_POST['guardar'])) {
 					<?php session_unset();
 					} ?>
 					<!-- FORMULARIO INFRACCIONES -->
-					<div class="card card-body form_servicio text-gray-900 mb-4">
-						<form action="../crud/guardar_infraccion.php" method="POST">
-							<div class="row form-group justify-content-center">
-								<div class="col-md-5 ">
-									<label for="inputFecha" class="form-label ">Fecha</label>
-									<input type="date" class="form-control" name="fecha_inf" id="inputFecha" required>
-								</div>
-								<div class="col-md-5">
-									<label for="inputValor" class="form-label">Valor</label>
-									<input type="number" class="form-control" name="valor_inf" id="inputValor" required>
-								</div>
-							</div>
-							<div class="row form-group justify-content-center">
-								<div class="col-md-5">
-									<label for="inputVehiculo" class="form-label">Vehiculo</label>
-									<select name="vehiculo_inf" id="inputVehiculo" class="form-select form-select-md" required>
-										<!-- <option value="" selected>-- Seleccione el Vehiculo --</option> -->
+					<div class="card card-body form_reducir text-gray-900 mb-4 col-md-5">
+						<form action="list_cliente.php" method="POST">
+							<div class="col-md">
+								<label for="inputCliente" class="form-label h5">Cliente</label>
+								<select name="cliente_v" id="inputCliente" class="form-select form-select-md" required>
+									<option value="" selected>-- Seleccione el Cliente--</option>
 
-										<!-- CONSULTA VEHICULO-->
-										<?php
-										if (isset($_GET['id'])) {
-											$id = $_GET['id'];
-											print $id;
-											$query = "SELECT * FROM vehiculos WHERE id = $id";
-											$ejecutar = mysqli_query($conn, $query);
-											while ($row = mysqli_fetch_assoc($ejecutar)) { ?>
-												<option value="<?php echo $row['id']; ?>"><?php echo $row['placa']; ?></option>
-										<?php }
-										} ?>
-									</select>
-								</div>
-								<div class="col-md-5">
-									<label for="inputConductor" class="form-label">Conductor</label>
-									<select name="conductor_inf" id="inputConductor" class="form-select form-select-md" required>
-										<!-- 	<option value="" selected>-- Seleccione el Conductor --</option> -->
+									<!-- CONSULTA CLIENTE-->
+									<?php
+									$query = "SELECT id , nombre FROM clientes";
+									$ejecutar = mysqli_query($conn, $query);
 
-										<!-- CONSULTA CONDUCTOR-->
-										<?php
-										if (isset($_GET['id'])) {
-											$id = $_GET['id'];
-											$query = "SELECT `vehiculos`.*, `conductores`.`nombre` AS `con_nom`, `clientes`.`nombre` AS `cli_nom` FROM `vehiculos` LEFT JOIN `conductores` ON `vehiculos`.`conductores_id` = `conductores`.`id` LEFT JOIN `clientes` ON `vehiculos`.`clientes_id` = `clientes`.`id` WHERE `vehiculos`.`id` = $id;";
-											$ejecutar = mysqli_query($conn, $query);
-											while ($row = mysqli_fetch_assoc($ejecutar)) { ?>
-												<option value="<?php echo $row['conductores_id']; ?>"><?php echo $row['con_nom']; ?></option>
-										<?php }
-										} ?>
-									</select>
-								</div>
+									while ($row = mysqli_fetch_assoc($ejecutar)) { ?>
+										<option value="<?php echo $row['id']; ?>">
+											<?php echo $row['nombre']; ?>
+										</option>
+
+									<?php } ?>
+								</select>
 							</div>
-							<div class="row justify-content-center form-group">
-								<div class="col-md-6">
-									<label for="inputDesc" class="form-label ">Descripción</label>
-									<textarea name="descripcion_inf" class="form-control" id="inputDesc" cols="20" rows="2" required></textarea>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-1 m-auto">
-									<input type="submit" value="Agregar" class="btn btn-primary " name="guardar">
+							<div class="row mt-3">
+								<div class="col-md-2 m-auto">
+									<input type="submit" value="Mostrar" class="btn btn-primary " name="mostrar">
 								</div>
 							</div>
 						</form>
@@ -284,59 +227,49 @@ if (isset($_POST['guardar'])) {
 					<!-- TABLA -->
 					<div class="card shadow mb-4">
 						<div class="card-header py-3">
-							<h6 class="m-0 font-weight-bold text-primary">Información Vehiculo</h6>
+							<h6 class="m-0 font-weight-bold text-primary">Listado de Infracciones</h6>
 						</div>
 						<div class="card-body">
 							<div class="table-responsive">
 								<table class="table table-bordered tabla" id="dataTable" width="100%" cellspacing="0">
 									<thead>
 										<tr>
-											<th>Fecha</th>
-											<th>Valor</th>
-											<th>Vehiculo</th>
-											<th>Conductor</th>
-											<th>Descripción</th>
+											<th>ID</th>
+											<th>Placa</th>
+											<th>Modelo</th>
+											<th>Marca</th>
 											<th>Acciones</th>
 										</tr>
 									</thead>
 									<tfoot>
 										<tr>
-											<th>Fecha</th>
-											<th>Valor</th>
-											<th>Vehiculo</th>
-											<th>Conductor</th>
-											<th>Descripción</th>
+											<th>ID</th>
+											<th>Placa</th>
+											<th>Modelo</th>
+											<th>Marca</th>
 											<th>Acciones</th>
 										</tr>
 									</tfoot>
 									<tbody>
 										<?php
-										if (isset($_GET['id'])) {
-											$id = $_GET['id'];
-											$query = "SELECT `infracciones`.*, `vehiculos`.`id` AS `ve_id`, `vehiculos`.`placa` AS `ve_placa`, `conductores`.`nombre` AS `con_nom`
-											FROM `infracciones` 
-											LEFT JOIN `vehiculos` ON `infracciones`.`vehiculos_id` = `vehiculos`.`id` 
-											LEFT JOIN `conductores` ON `infracciones`.`conductores_id` = `conductores`.`id` WHERE `vehiculos`.`id` = $id;";
-											$resultado = mysqli_query($conn, $query);
-											while ($row = mysqli_fetch_array($resultado)) { ?>
+										if (isset($_POST['mostrar'])) {
+											$estado = $_POST['cliente_v'];
+											$query = "SELECT * FROM vehiculos WHERE clientes_id = $estado";
+											$result = mysqli_query($conn, $query);
+											while ($row = mysqli_fetch_array($result)) { ?>
 												<tr>
-													<td><?php echo $row['fecha'] ?></td>
-													<td><?php echo $row['valor'] ?></td>
-													<td><?php echo $row['ve_placa'] ?></td>
-													<td><?php echo $row['con_nom'] ?></td>
-													<td><?php echo $row['descripcion'] ?></td>
-													<td class="text-center">
-														<a href="editar_infraccion.php?id=<?php echo $row['id'] ?>" class="btn btn-secondary">
-															<i class="far fa-edit"></i>
-														</a>
-														<a href="eliminar_infraccion.php?id=<?php echo $row['id'] ?>" class="btn btn-danger">
-															<i class="far fa-trash-alt"></i>
+													<td><?php echo $row['id'] ?></td>
+													<td><?php echo $row['placa'] ?></td>
+													<td><?php echo $row['modelo'] ?></td>
+													<td><?php echo $row['marca'] ?></td>
+													<td class="text-center ">
+														<a href="inf_cliente.php?id=<?php echo $row['id'] ?>" class="btn btn-success">REPARACIONES
+															<i class="fas fa-tools"></i>
 														</a>
 													</td>
 												</tr>
 										<?php }
 										} ?>
-
 									</tbody>
 								</table>
 							</div>

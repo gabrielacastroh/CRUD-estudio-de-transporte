@@ -13,3 +13,4 @@ $_SESSION['message'] = 'Servicio Eliminado';
 $_SESSION['message_type']='danger';
     header("Location: ../pages/servicio.php");
 }
+?>

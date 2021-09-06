@@ -93,9 +93,11 @@
 				<div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">Listado de:</h6>
-						<a class="collapse-item" href="listado/list_infraccion.php">Infracciones (Punto 2)</a>
+						<a class="collapse-item " href="listado/list_infraccion.php">Infracciones (Punto 2)</a>
 						<a class="collapse-item" href="listado/list_vehiculo.php">Vehiculos (Punto 3) </a>
 						<a class="collapse-item" href="listado/list_vehiculo_2.php">Vehiculos (Punto 4) </a>
+						<a class="collapse-item" href="listado/list_cliente.php">Lista Cliente (Punto 6) </a>
+
 					</div>
 				</div>
 			</li>
@@ -109,8 +111,7 @@
 				<div id="collapseUtilities" class="collapse show" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">Generar Reporte:</h6>
-						<a class="collapse-item active" href="../tabla_pdf.php">Infracciones</a>
-
+						<a class="collapse-item active" href="detalle_infraccion.php">Reporte Infracción</a>
 					</div>
 				</div>
 			</li>

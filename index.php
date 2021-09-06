@@ -85,6 +85,7 @@
                         <a class="collapse-item" href="listado/list_infraccion.php">Infracciones (Punto 2)</a>
                         <a class="collapse-item" href="listado/list_vehiculo.php">Vehiculos (Punto 3) </a>
                         <a class="collapse-item" href="listado/list_vehiculo_2.php">Vehiculos (Punto 4) </a>
+                        <a class="collapse-item" href="listado/list_cliente.php">Lista Cliente (Punto 6) </a>
                     </div>
                 </div>
             </li>
@@ -102,7 +103,6 @@
                     </div>
                 </div>
             </li>
-
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -173,15 +173,15 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h1 mb-0 text-gray-900">Dashboard</h1>
+                        <h1 class="h2 mb-0 text-gray-900">Dashboard</h1>
                         <a href="detalle_infraccion.php" class="d-none d-sm-inline-block p-2 btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-90"></i> Generar Reporte</a>
                     </div>
 
-                    <div class="row py-4">
+                    <div class="row ">
                         <!-- CARD CONDUCTOR -->
-                        <div class="col-xl-6 col-md-6 mb-4">
+                        <div class="col-xl-4 col-md-3 mb-1">
                             <a href="pages/conductor.php" class="text-decoration-none">
-                                <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card border-left-primary shadow h-100">
                                     <div class="card-body">
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-2">
@@ -198,9 +198,9 @@
                         </div>
 
                         <!-- CARD CLIENTE -->
-                        <div class="col-xl-6 col-md-6 mb-4">
+                        <div class="col-xl-4 col-md-3 mb-1">
                             <a href="pages/cliente.php" class="text-decoration-none">
-                                <div class="card border-left-success shadow h-100 py-2">
+                                <div class="card border-left-success shadow h-100">
                                     <div class="card-body">
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-2">
@@ -215,13 +215,10 @@
                                 </div>
                             </a>
                         </div>
-                    </div>
-
-                    <div class="row py-2">
                         <!-- CARD SERVICIOS -->
-                        <div class="col-xl-6 col-md-6 mb-4">
+                        <div class="col-xl-4 col-md-4 mb-1">
                             <a href="pages/servicio.php" class="text-decoration-none">
-                                <div class="card border-left-info shadow h-100 py-2">
+                                <div class="card border-left-info shadow h-100">
                                     <div class="card-body">
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-2">
@@ -229,18 +226,20 @@
                                                 <div class=" mb-0 font-weight-bold text-gray-900 text-xs ">Ingresar, Actualizar y Eliminar servicios</div>
                                             </div>
                                             <div class="col-auto">
-                                                <i class="fas fa-tools fa-2x text-gray-300"></i>
+                                                <i class="fas fa-check fa-2x text-gray-300"></i>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </a>
                         </div>
+                    </div>
 
+                    <div class="row py-1">
                         <!-- CARD VEHICULOS -->
-                        <div class="col-xl-6 col-md-6 mb-4">
+                        <div class="col-xl-4 col-md-4 mb-1">
                             <a href="pages/vehiculo.php" class="text-decoration-none">
-                                <div class="card border-left-warning shadow h-100 py-2">
+                                <div class="card border-left-warning shadow h-100">
                                     <div class="card-body">
                                         <div class="row no-gutters align-items-center">
                                             <div class="col mr-2">
@@ -256,8 +255,123 @@
                             </a>
                         </div>
 
+                        <!-- CARD REPARACIÓN -->
+                        <div class="col-xl-4 col-md-4 mb-1">
+                            <a href="pages/reparacion.php" class="text-decoration-none">
+                                <div class="card border-left-primary shadow h-100">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <h5 class="mb-2 font-weight-bold text-primary text-uppercase mb-1">Reparaciones</h5>
+                                                <div class=" mb-0 font-weight-bold text-gray-900 text-xs ">Ingresar, Actualizar y Eliminar Reparaciones (Punto 1)</div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-tools fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <!-- CARD INFRACCIONES -->
+                        <div class="col-xl-4 col-md-4 mb-1">
+                            <a href="pages/infraccion.php" class="text-decoration-none">
+                                <div class="card border-left-danger shadow h-100">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <h5 class="mb-2 font-weight-bold text-danger text-uppercase mb-1">Infracciones</h5>
+                                                <div class=" mb-0 font-weight-bold text-gray-900 text-xs ">Ingresar, Actualizar y Eliminar Infracciones</div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-exclamation-triangle fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
                     </div>
+
+                    <div class="d-sm-flex align-items-center justify-content-between mb-1 py-4">
+                        <h1 class="h2 mb-0 text-gray-900">Listados</h1>
+                    </div>
+
+                    <div class="row">
+                        <!-- CARD INFRACCIONES COMETIDAS -->
+                        <div class="col-xl-3 col-md-4 mb-1">
+                            <a href="listado/list_infraccion.php" class="text-decoration-none">
+                                <div class="card border-left-danger shadow h-100">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <h5 class="mb-2 font-weight-bold text-danger text-uppercase mb-1">Infracciones Cometidas</h5>
+                                                <div class=" mb-0 font-weight-bold text-gray-900 text-xs ">Infracciones cometidas entre dos fechas</div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-exclamation-triangle fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-xl-3 col-md-4 mb-1">
+                            <a href="listado/list_vehiculo.php" class="text-decoration-none">
+                                <div class="card border-left-warning shadow h-100">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <h5 class="mb-2 font-weight-bold text-warning text-uppercase mb-1">Vehiculos</h5>
+                                                <div class=" mb-0 font-weight-bold text-gray-900 text-xs ">Lista de vehiculos. Mostrar y eliminar infracciones de un vehiculo</div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-car fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-xl-3 col-md-4 mb-1">
+                            <a href="listado/list_vehiculo_2.php" class="text-decoration-none">
+                                <div class="card border-left-warning shadow h-100">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <h5 class="mb-2 font-weight-bold text-warning text-uppercase mb-1">Vehiculos</h5>
+                                                <div class=" mb-0 font-weight-bold text-gray-900 text-xs ">Lista de vehiculos. Permite modificar propietario y conductor de un vehiculo</div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-car fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-xl-3 col-md-3 mb-1">
+                            <a href="listado/list_cliente.php" class="text-decoration-none">
+                                <div class="card border-left-success shadow h-100">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <h5 class="mb-2 font-weight-bold text-success text-uppercase mb-1">Clientes</h5>
+                                                <div class=" mb-0 font-weight-bold text-gray-900 text-xs ">Visualizar vehiculos de un cliente y sus reparaciones</div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-user-circle fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
                 </div>
+
                 <!-- /.container-fluid -->
 
             </div>

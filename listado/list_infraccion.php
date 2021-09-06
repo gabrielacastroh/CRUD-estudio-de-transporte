@@ -96,6 +96,7 @@
 						<a class="collapse-item active" href="list_infraccion.php">Infracciones (Punto 2)</a>
 						<a class="collapse-item" href="list_vehiculo.php">Vehiculos (Punto 3) </a>
 						<a class="collapse-item" href="list_vehiculo_2.php">Vehiculos (Punto 4) </a>
+						<a class="collapse-item" href="list_cliente.php">Lista Cliente (Punto 6) </a>
 					</div>
 				</div>
 			</li>
@@ -109,7 +110,7 @@
 				<div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">Generar Reporte:</h6>
-						<a class="collapse-item" href="../tabla_pdf.php">Vehiculos</a>
+						<a class="collapse-item" href="../detalle_infraccion.php">Reporte Infracción</a>
 
 					</div>
 				</div>
@@ -240,7 +241,6 @@
 									<tbody>
 										<?php
 										if (isset($_POST['mostrar'])) {
-											/* 											$id = $_POST['id_vehiculo']; */
 											$fe_inicio = $_POST['fecha_inicio'];
 											$fe_fin = $_POST['fecha_fin'];
 											$query = "SELECT * FROM infracciones WHERE fecha BETWEEN '$fe_inicio' AND '$fe_fin' ;";

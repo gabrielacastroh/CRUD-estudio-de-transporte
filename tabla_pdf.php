@@ -50,7 +50,7 @@ if (isset($_POST['generar'])) {
 	$idcv = $_POST['id_infraccion'];
 }
 	
-$pdf = new PDF('P', 'mm', 'A4');
+$pdf = new PDF('P', 'mm', 'LETTER');
 $pdf->AliasNbPages();
 $pdf->AddPage();
 $pdf->SetFont('Arial', '', 11);
